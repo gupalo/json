@@ -12,6 +12,15 @@ class Json
      * @param array|string|JsonSerializable|null $data
      * @return array
      */
+    public static function decode($data = null): array
+    {
+        return self::toArray($data);
+    }
+
+    /**
+     * @param array|string|JsonSerializable|null $data
+     * @return array
+     */
     public static function toArray($data = null): array
     {
         if ($data === null || $data === '') {
@@ -29,6 +38,11 @@ class Json
         }
 
         return $data;
+    }
+
+    public static function encode($data = null, $defaultData = []): string
+    {
+        return self::toString($data, $defaultData);
     }
 
     public static function toString($data = null, $defaultData = []): string

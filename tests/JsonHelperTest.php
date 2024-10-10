@@ -14,6 +14,7 @@ class JsonHelperTest extends TestCase
         $s = '{"key":"value","0":{"subkey":"subvalue","k2":"v2"}}';
 
         self::assertSame($data, Json::toArray($s));
+        self::assertSame($data, Json::decode($s));
     }
 
     public function testToArray_JsonSerializable(): void
@@ -22,13 +23,19 @@ class JsonHelperTest extends TestCase
         $obj = new JsonSerializableStub('123');
 
         self::assertSame($data, Json::toArray($obj));
+        self::assertSame($data, Json::decode($obj));
     }
 
     public function testToArray_Empty(): void
     {
         self::assertSame([], Json::toArray());
+        self::assertSame([], Json::decode());
+
         self::assertSame([], Json::toArray(null));
+        self::assertSame([], Json::decode(null));
+
         self::assertSame([], Json::toArray(''));
+        self::assertSame([], Json::decode(''));
     }
 
     public function testToArray_InvalidJson(): void
@@ -45,5 +52,6 @@ class JsonHelperTest extends TestCase
         $s = '{"key":"value","0":{"subkey":"subvalue","k2":"v2"}}';
 
         self::assertSame($s, Json::toString($data));
+        self::assertSame($s, Json::encode($data));
     }
 }
