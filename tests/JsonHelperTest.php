@@ -33,8 +33,8 @@ class JsonHelperTest extends TestCase
 
     public function testToArray_InvalidJson(): void
     {
-        self::expectException(RuntimeException::class);
-        self::expectExceptionMessage('Syntax error');
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Syntax error');
 
         Json::toArray('invalid_json');
     }

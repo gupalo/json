@@ -20,12 +20,7 @@ class Json
 
         if (is_string($data)) {
             try {
-                $data = json_decode($data, true);
-
-                $err = json_last_error_msg();
-                if ($err !== 'No error') {
-                    throw new RuntimeException($err);
-                }
+                $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
             } catch (Throwable $e) {
                 throw new RuntimeException($e->getMessage());
             }
@@ -39,10 +34,10 @@ class Json
     public static function toString($data = null, $defaultData = []): string
     {
         try {
-            $s = json_encode($data);
+            $s = json_encode($data, JSON_THROW_ON_ERROR);
         } catch (Throwable $e) {
             try {
-                $s = json_encode($defaultData);
+                $s = json_encode($defaultData, JSON_THROW_ON_ERROR);
             } catch (Throwable $e) {
                 $s = '{}';
             }
