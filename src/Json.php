@@ -21,7 +21,7 @@ class Json
 
         if (is_string($data)) {
             try {
-                $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+                $data = json_decode($data, true, 512, JSON_THROW_ON_ERROR + JSON_INVALID_UTF8_SUBSTITUTE);
             } catch (Throwable $e) {
                 throw new RuntimeException($e->getMessage());
             }
@@ -40,10 +40,10 @@ class Json
     public static function toString(mixed $data = null, $defaultData = []): string
     {
         try {
-            $s = json_encode($data, JSON_THROW_ON_ERROR);
+            $s = json_encode($data, JSON_THROW_ON_ERROR + JSON_INVALID_UTF8_SUBSTITUTE);
         } catch (Throwable) {
             try {
-                $s = json_encode($defaultData, JSON_THROW_ON_ERROR);
+                $s = json_encode($defaultData, JSON_THROW_ON_ERROR + JSON_INVALID_UTF8_SUBSTITUTE);
             } catch (Throwable) {
                 $s = '{}';
             }
